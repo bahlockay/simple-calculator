@@ -177,11 +177,102 @@ public class Calculator extends JFrame implements ActionListener {
             if (str.length() > 0) {
                 display.setText(str.substring(0, str.length() = 1));
         }
+        // operator buttons
+        if (e.getSource() == addButton) {
+            num1 = Double.parseDouble(display.getText().isEmpty() ? "0" : display.getText());
+            operator = '+';
+            display.setText("");
+        }
+        if (e.getSource() == subButton) {
+            num1 = Double.parseDouble(display.getText().isEmpty() ? "0" : display.getText());
+            operator = '-';
+            display.setText("");
+        }
+        if (e.getSource() == mulButton) {
+            num1 = Double.parseDouble(display.getText().isEmpty() ? "0" : display.getText());
+            operator = '*';
+            display.setText("");
+        }
+        if (e.getSource() == divButton) {
+            num1 = Double.parseDouble(display.getText().isEmpty() ? "0" : display.getText());
+            operator = '/';
+            display.setText("");
+        }
 
+        // equal button
+        if (e.getSource() == equButton) {
+            num2 = Double.parseDouble(display.getText().isEmpty() ? "0" : display.getText());
+            switch (operator) {
+                case '+':
+                    result = num1 + num2;
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    break;
+                case '*':
+                    result = num1 * num2;
+                    break;
+                case '/':
+                    if (num2 != 0) {
+                        result = num1 / num2;
+                    } else {
+                        display.setText("Error: Div by 0");
+                        return;
+                    }
+                    break;
+            }
+            display.setText(String.valueOf(result));
+            num1 = result;
+        }
+        }
 
+        // scientific functions
+        if (e.getSource() == sinButton) {
+            if(!display.getText().isEmpty()) {
+                double value = Double.parseDouble(display.getText());
+                result = Math.sin(Math.toRadians(value));
+                display.setText(String.valueOf(result));    
+            }
+        }
+        if (e.getSource() == cosButton) {
+            if(!display.getText().isEmpty()) {
+                double value = Double.parseDouble(display.getText());
+                result = Math.cos(Math.toRadians(value));
+                display.setText(String.valueOf(result));    
+            }
+        }
+        if (e.getSource() == logButton) {
+            if(!display.getText().isEmpty()) {
+                double value = Double.parseDouble(display.getText());
+                if (value > 0) {
+                    result = Math.log10(value);
+                    display.setText(String.valueOf(result));
+                } else {
+                    display.setText("Error");
+                }
+            }
+        }
+        // memory functions
+        if (e.getSource() == mPlusButton) {
+            if(!display.getText().isEmpty()) {
+                memory += Double.parseDouble(display.getText());
+            }
+        }
 
+        if (e.getSource() == mMinusButton) {
+            if(!display.getText().isEmpty()) {
+                memory -= Double.parseDouble(display.getText());
+            }
+        }
 
+        if (e.getSource() == mRecallButton) {
+            display.setText(String.valueOf(memory));
+        }
 
+        if (e.getSource() == mClearButton) {
+            memory = 0;
+        }
 
+        
 
 }
