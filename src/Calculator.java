@@ -1,4 +1,4 @@
-import javax.swing.*
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -10,7 +10,7 @@ public class Calculator extends JFrame implements ActionListener {
     private JButton addButton, subButton, mulButton, divButton;
     private JButton decButton, equButton, delButton, clrButton;
     private JButton sinButton, cosButton, logButton;
-    private JButtton mPlusButton, mMinusButton, mRecallButton, mClearButton;
+    private JButton mPlusButton, mMinusButton, mRecallButton, mClearButton;
     private JToggleButton themeButton;
     private JPanel panel;
 
@@ -43,7 +43,7 @@ public class Calculator extends JFrame implements ActionListener {
         display.setBounds(20, 20, 410, 60);
         display.setFont(new Font("Arial", Font.PLAIN, 28));
         display.setEditable(true);
-        display.setHorizontialAlignment(JTextField.RIGHT);
+        display.setHorizontalAlignment(JTextField.RIGHT);
         display.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
@@ -53,6 +53,7 @@ public class Calculator extends JFrame implements ActionListener {
                 if (c == KeyEvent.VK_ENTER) {
                     equButton.doClick();
                     e.consume();
+                }
             }
         });
         numberButtons = new JButton[10];
@@ -175,8 +176,10 @@ public class Calculator extends JFrame implements ActionListener {
         if (e.getSource() == delButton) {
             String str = display.getText();
             if (str.length() > 0) {
-                display.setText(str.substring(0, str.length() = 1));
+                display.setText(str.substring(0, str.length() - 1));
         }
+     }
+     
         // operator buttons
         if (e.getSource() == addButton) {
             num1 = Double.parseDouble(display.getText().isEmpty() ? "0" : display.getText());
@@ -273,6 +276,54 @@ public class Calculator extends JFrame implements ActionListener {
             memory = 0;
         }
 
-        
+        // theme toggle
+        if (e.getSource() == themeButton) {
+            isDarkTheme = !isDarkTheme;
+            applyTheme();
+        }
+    }
 
+    private void applyTheme() {
+        if (isDarkTheme) {
+            // dark mode
+            getContentPane().setBackground(darkBg);
+            panel.setBackground(darkBg);
+            display.setBackground(darkDisplay);
+            display.setForeground(darkText);
+            display.setCaretColor(darkText);
+
+            for (JButton button : numberButtons) {
+                button.setBackground(darkButton);
+                button.setForeground(darkText);
+            }
+            for (JButton button : functionButtons) {
+                button.setBackground(darkButton);
+                button.setForeground(darkText);
+            }
+            themeButton.setBackground(darkButton);
+            themeButton.setForeground(darkText);
+        } else {
+            // light mode
+            getContentPane().setBackground(lightBg);
+            panel.setBackground(lightBg);
+            display.setBackground(lightDisplay);
+            display.setForeground(lightText);
+            display.setCaretColor(lightText);
+
+            for (JButton button : numberButtons) {
+                button.setBackground(lightButton);
+                button.setForeground(lightText);
+            }
+            for (JButton button : functionButtons) {
+                button.setBackground(lightButton);
+                button.setForeground(lightText);
+            }
+            themeButton.setBackground(lightButton);
+            themeButton.setForeground(lightText);
+
+        }
+    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Calculator());
+    }
 }
