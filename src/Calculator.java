@@ -136,11 +136,52 @@ public class Calculator extends JFrame implements ActionListener {
         panel.add(numberButtons[3]);
         panel.add(equButton);
 
-        
+        panel.add(numberButtons[0]);
+        panel.add(decButton);
+        panel.add(new JLabel()); // empty space
+        panel.add(new JLabel()); // empty space
 
+        // add components to frame
+        add(display);
+        add(panel);
 
-
+        // set initial theme
+        applyTheme();
+        setVisible(true);
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // # buttons
+        for (int i = 0; i < 10; i++) {
+            if (e.getSource() == numberButtons[i]) {
+                display.setText(display.getText() + i);
+            }
+        }
+        // dec point
+        if (e.getSource() == decButton) {
+            if (!display.getText().contains(".")) {
+                display.setText(display.getText() + ".");
+            }
+        }
+
+        // clr button
+        if (e.getSource() == clrButton) {
+            display.setText("");
+            num1 = num2 = result = 0;
+        }
+
+        // del button
+        if (e.getSource() == delButton) {
+            String str = display.getText();
+            if (str.length() > 0) {
+                display.setText(str.substring(0, str.length() = 1));
+        }
+
+
+
+
+
 
 
 }
